@@ -1,0 +1,25 @@
+# Maven build output
+**/target/
+**/build/
+
+# Logs
+logs/*.log
+logs/*.log.err
+logs/*.pid
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Docker override files (optional, not needed for dev)
+docker-compose.override.yml
+
+# Environment secrets
+.env
+*.env

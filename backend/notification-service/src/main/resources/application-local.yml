@@ -1,0 +1,15 @@
+spring:
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      auto-offset-reset: earliest
+      properties:
+        session.timeout.ms: 3000
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    com.shopnest: DEBUG

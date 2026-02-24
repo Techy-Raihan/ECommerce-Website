@@ -1,0 +1,28 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
+# In local mode, disable JWT auth so we can test without tokens
+# Remove or comment this out when going to production
+shopnest:
+  gateway:
+    skip-auth: true
+
+eureka:
+  client:
+    enabled: false
+
+logging:
+  level:
+    com.shopnest: DEBUG
+    org.springframework.cloud.gateway: INFO
