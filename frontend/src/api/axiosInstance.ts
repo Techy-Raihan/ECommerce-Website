@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_BASE || '';
+
 const api = axios.create({
-    baseURL: '/api',
+    baseURL: `${API_BASE}/api`,
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
 });
@@ -18,20 +20,28 @@ api.interceptors.response.use(
     (res) => res,
     async (error) => {
         const originalRequest = error.config;
+
         if (error.response?.status === 401 && !originalRequest._retry) {
             originalRequest._retry = true;
             try {
                 const refreshToken = localStorage.getItem('refreshToken');
                 if (!refreshToken) throw new Error('No refresh token');
-                const { data } = await axios.post('/api/auth/refresh', { refreshToken });
+
+                const { data } = await axios.post(
+                    `${API_BASE}/api/auth/refresh`,
+                    { refreshToken }
+                );
+
                 localStorage.setItem('accessToken', data.accessToken);
                 originalRequest.headers.Authorization = `Bearer ${data.accessToken}`;
+
                 return api(originalRequest);
             } catch {
                 localStorage.clear();
                 window.location.href = '/login';
             }
         }
+
         return Promise.reject(error);
     }
 );
